@@ -3,7 +3,7 @@
 This directory contains utility scripts for the Raredex Python SDK.
 
 ## Model Generation
-
+ 
 ### `generate_models_simple.py`
 
 Fetches the Raredex API OpenAPI specification and generates Pydantic models.
