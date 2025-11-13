@@ -9,7 +9,7 @@ import secrets
 
 from eth_account import Account
 
-
+ 
 def generate_ethereum_keypair():
     """Generate a random Ethereum private key and corresponding address."""
     # Generate a cryptographically secure random private key (32 bytes)
