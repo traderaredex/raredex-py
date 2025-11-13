@@ -5,9 +5,9 @@ from decimal import Decimal
 
 from starknet_py.common import int_from_hex
 
-from paradex_py import Paradex
-from paradex_py.common.order import Order, OrderSide, OrderType
-from paradex_py.environment import TESTNET
+from raredex_py import Raredex
+from raredex_py.common.order import Order, OrderSide, OrderType
+from raredex_py.environment import TESTNET
 
 # Environment variables
 TEST_L1_ADDRESS = os.getenv("L1_ADDRESS", "")
@@ -15,70 +15,70 @@ TEST_L1_PRIVATE_KEY = int_from_hex(os.getenv("L1_PRIVATE_KEY", ""))
 LOG_FILE = os.getenv("LOG_FILE", "FALSE").lower() == "true"
 
 if LOG_FILE:
-    from paradex_py.common.file_logging import file_logger
+    from raredex_py.common.file_logging import file_logger
 
     logger = file_logger
     logger.info("Using file logger")
 else:
-    from paradex_py.common.console_logging import console_logger
+    from raredex_py.common.console_logging import console_logger
 
     logger = console_logger
     logger.info("Using console logger")
 
 # Test Public API calls
 
-public_paradex = Paradex(env=TESTNET, logger=logger)
-system_state = public_paradex.api_client.fetch_system_state()
+public_raredex = Raredex(env=TESTNET, logger=logger)
+system_state = public_raredex.api_client.fetch_system_state()
 logger.info(f"{system_state=}")
-system_time = public_paradex.api_client.fetch_system_time()
+system_time = public_raredex.api_client.fetch_system_time()
 logger.info(f"{system_time=}")
-insurance_fund = public_paradex.api_client.fetch_insurance_fund()
+insurance_fund = public_raredex.api_client.fetch_insurance_fund()
 logger.info(f"{insurance_fund=}")
-markets = public_paradex.api_client.fetch_markets()
+markets = public_raredex.api_client.fetch_markets()
 logger.info(f"{markets=}")
 for market in markets["results"][:5]:  # Limit to 5 markets for testing
     if not int(market.get("position_limit")):
         continue
     symbol = market["symbol"]
-    mkt_summary = public_paradex.api_client.fetch_markets_summary({"market": symbol})
+    mkt_summary = public_praredex.api_client.fetch_markets_summary({"market": symbol})
     logger.info(f"{mkt_summary=}")
-    ob = public_paradex.api_client.fetch_orderbook(market=symbol, params={"depth": 5})
+    ob = public_raredex.api_client.fetch_orderbook(market=symbol, params={"depth": 5})
     logger.info(f"{ob}=")
-    bbo = public_paradex.api_client.fetch_bbo(market=symbol)
+    bbo = public_raredex.api_client.fetch_bbo(market=symbol)
     logger.info(f"{bbo=}")
 
-    trades = public_paradex.api_client.fetch_trades({"market": symbol, "page_size": 20})
+    trades = public_raredex.api_client.fetch_trades({"market": symbol, "page_size": 20})
     logger.info(f"{trades=}")
 
-    funding_data = public_paradex.api_client.fetch_funding_data(params={"market": symbol})
+    funding_data = public_raredex.api_client.fetch_funding_data(rarems={"market": symbol})
     logger.info(f"Funding data {funding_data=}")
 
 # Test Insurance endpoints
-insurance_fund = public_paradex.api_client.fetch_insurance_fund()
+insurance_fund = public_raredex.api_client.fetch_insurance_fund()
 logger.info(f"{insurance_fund=}")
 
 # Test System endpoints
-system_config = public_paradex.api_client.fetch_system_config()
+system_config = public_raredex.api_client.fetch_system_config()
 logger.info(f"{system_config=}")
 
 # Test Private API calls
-paradex = Paradex(
+raredex = Raredex(
     env=TESTNET,
     l1_address=TEST_L1_ADDRESS,
     l1_private_key=TEST_L1_PRIVATE_KEY,
     logger=logger,
 )
 
-account_summary = paradex.api_client.fetch_account_summary()
+account_summary = raredex.api_client.fetch_account_summary()
 logger.info(f"{account_summary=}")
-account_profile = paradex.api_client.fetch_account_profile()
+account_profile = raredex.api_client.fetch_account_profile()
 logger.info(f"{account_profile=}")
 
-balances = paradex.api_client.fetch_balances()
+balances = raredex.api_client.fetch_balances()
 logger.info(f"{balances=}")
-positions = paradex.api_client.fetch_positions()
+positions = raredex.api_client.fetch_positions()
 logger.info(f"{positions=}")
-transactions = paradex.api_client.fetch_transactions(params={"page_size": 5})
+transactions = raredex.api_client.fetch_transactions(params={"page_size": 5})
 logger.info(f"{transactions=}")
 fills = paradex.api_client.fetch_fills(params={"page_size": 5})
 logger.info(f"{fills=}")
