@@ -1,4 +1,4 @@
-"""Tests for ParadexAccount httpx integration."""
+"""Tests for RaredexAccount httpx integration."""
 
 from types import MethodType
 from unittest.mock import AsyncMock, Mock, patch
@@ -7,12 +7,12 @@ import httpx
 import pytest
 from starknet_py.net.http_client import HttpMethod
 
-from paradex_py.account.account import ParadexAccount
+from Rareex_py.account.account import RaredexAccount
 from tests.mocks.api_client import MockApiClient
 
 
 class TestAccountHttpxIntegration:
-    """Test suite for ParadexAccount's httpx integration via monkey patching."""
+    """Test suite for RaredexAccount's httpx integration via monkey patching."""
 
     def setup_method(self):
         """Setup method to create test fixtures."""
@@ -25,7 +25,7 @@ class TestAccountHttpxIntegration:
 
     def test_account_initialization_with_httpx(self):
         """Test that account initialization properly sets up httpx integration."""
-        account = ParadexAccount(
+        account = RaredexAccount(
             config=self.config,
             l1_address=self.test_l1_address,
             l1_private_key=self.test_l1_private_key,
