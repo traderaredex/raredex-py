@@ -26,7 +26,7 @@ def random_resource_bounds(randomized_factor: int = 100000) -> ResourceBoundsMap
             max_amount=l2_gas_max_amount + randomized,
             max_price_per_unit=l2_gas_max_price_per_unit,
         ),
-    )
+    ) 
 
 
 def time_now_milli_secs() -> int:
